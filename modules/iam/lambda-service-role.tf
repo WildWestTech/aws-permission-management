@@ -34,6 +34,7 @@ resource "aws_iam_policy" "lambda-policy" {
                 "logs:*",
                 "s3:*",
                 "sqs:*",
+                "sns:*",
                 "rds:*"
             ],
             "Resource": "*"

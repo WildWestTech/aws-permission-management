@@ -26,4 +26,6 @@ provider "aws" {
 
 module "iam" {
     source  = "../../modules/iam"
+    account = "251863357540"
+    region  = "us-east-1"
 }

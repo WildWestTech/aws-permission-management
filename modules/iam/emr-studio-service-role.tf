@@ -223,6 +223,21 @@ resource "aws_iam_policy" "emr-studio-service-role-policy" {
         "sso-directory:SearchUsers"
       ],
       "Resource": "*"
+    },
+    {
+      "Sid": "AllowS3WorkspaceAccess",
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject",
+        "s3:GetEncryptionConfiguration",
+        "s3:ListBucket",
+        "s3:DeleteObject"              
+      ],
+      "Resource": [
+                "arn:aws:s3:::wildwesttech-emr-studio-workspace-${var.env}/*",
+                "arn:aws:s3:::wildwesttech-emr-studio-workspace-${var.env}"
+            ]       
     }
   ]
 }

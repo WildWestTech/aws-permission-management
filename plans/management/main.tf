@@ -25,7 +25,7 @@ provider "aws" {
 }
 
 module "permission-sets" {
-    source = "../../modules/permission-sets"
+    source = "../../modules/iam_identity_center"
     dev_account     = "251863357540"
     prod_account    = "264940530023"
 }

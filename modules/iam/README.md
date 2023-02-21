@@ -1,0 +1,40 @@
+### High-Level Overview
+
+- AWSServiceRoleForEMRCleanup 
+    - Required by EMR.  
+    - With enough IAM permissions in-place, this role creates by default when EMR spins up.
+    - It was missing for me, so my cluster templates were failing to launch, until I created the role.
+- ClusterTemplateLaunchRole
+    - Using the service catalog, we can store EMR cluster templates as products.
+    - We can assign those products to portfolios.
+    - We can grant users access to these portfolios.
+    - We can add a launch constraint to these portfolios/products.
+    - The launch role of this constraint is responsible for launching the cloudformation template of the EMR cluster.
+    - The way I have it coded, it hands over this permission to "EMR_EC2_xxx", the JobFlowRole role associated with the EMR cluster (as defined within the template).
+- EMR_DefaultRole
+    - This is the ServiceRole of the EMR cluster, as defined in the cluster template
+    - Keep an eye on the managed policy.  It is set to be deprecated by AWS.
+- EMR_EC2_Admin_Role
+    - A custom JobFlowRole that I am working on for the EMR clusers.
+    - It and other JobFlowRole roles will be where we assign permissions like accessing databases, etc. for EMR Studio users.
+    - You need to account for any of these custom roles in ClusterTemplateLaunchRole.
+    - Thie role also would need to be present in the cluster template that you plan to launch.
+- EMR_EC2_DefaultRole
+    - This is the standard naming convention for the JobFlowRole for EMR studio.
+    - I plan on replacing this with more intentional roles (EMR_EC2_Admin_Role, EMR_EC2_Analyst_Role, etc.)
+    - Remember, this needs to be accounted for in both the ClusterTemplateLaunchRole and cluster template.
+- EMRStudio_Service_Role
+    - still working on a good explanation
+- EMRStudio_User_Role
+    - This assigns the permissions associated with users entering an EMR Studio.
+    - We assign this as the user role when creating EMR Studio.
+    - It has multiple policies attached (Advanced, Intermediate, and Basic).
+    - When we assign users/groups to a studio, we can then assign one of the above session policies.
+    - Those policies (Advanced...) allow users to perform a range of things, with the main focus being on whether or not the can create clusters from scratch, using a template, or simply attaching to existing clusters.
+    - I prefer defining my clusters (with parameters for flexibility) in templates, then using those.
+    - Once you're actually using a cluster, your permissions like which database/files/secrets you can access will be determined by the JobFlowRole.
+- lambda-service-role
+    - Standard service role for using lambdas.  I'm being pretty liberal with its permissions.
+- scheduler-service-role
+    - Used for working with schedules in eventbridge.
+

@@ -1,6 +1,4 @@
-#============================================================================================================
-# Policy Attachment: Attach ClusterTemplateLaunchConstraintPolicy
-#============================================================================================================
+
 resource "aws_iam_role" "ClusterTemplateLaunchRole" {
   #This creates an IAM Role called 'Cluster_Template_Launch_Role'
   name = "ClusterTemplateLaunchRole"
@@ -66,8 +64,9 @@ resource "aws_iam_policy" "ClusterTemplateLaunchConstraintPolicy" {
                 "iam:passRole"
             ],
             "Resource": [
-                "arn:aws:iam::779149424254:role/EMR_DefaultRole",
-                "arn:aws:iam::779149424254:role/EMR_EC2_DefaultRole"
+                "arn:aws:iam::${var.account}:role/EMR_DefaultRole",
+                "arn:aws:iam::${var.account}:role/EMR_EC2_DefaultRole",
+                "arn:aws:iam::${var.account}:role/EMR_EC2_Admin_Role",
             ],
             "Effect": "Allow"
         }

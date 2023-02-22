@@ -66,7 +66,7 @@ resource "aws_iam_policy" "ClusterTemplateLaunchConstraintPolicy" {
             "Resource": [
                 "arn:aws:iam::${var.account}:role/EMR_DefaultRole",
                 "arn:aws:iam::${var.account}:role/EMR_EC2_DefaultRole",
-                "arn:aws:iam::${var.account}:role/EMR_EC2_Admin_Role",
+                "arn:aws:iam::${var.account}:role/EMR_EC2_Admin_Role"
             ],
             "Effect": "Allow"
         }

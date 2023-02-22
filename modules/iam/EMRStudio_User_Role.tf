@@ -132,7 +132,8 @@ resource "aws_iam_policy" "EMRStudio_Advanced_User_Policy" {
             "Resource": [
                 "arn:aws:iam::${var.account}:role/EMRStudio_Service_Role",
                 "arn:aws:iam::${var.account}:role/EMR_DefaultRole",
-                "arn:aws:iam::${var.account}:role/EMR_EC2_DefaultRole"
+                "arn:aws:iam::${var.account}:role/EMR_EC2_DefaultRole",
+                "arn:aws:iam::${var.account}:role/EMR_EC2_Admin_Role"
             ],
             "Effect": "Allow",
             "Sid": "AllowPassingServiceRoleForWorkspaceCreation"

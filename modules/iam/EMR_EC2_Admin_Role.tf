@@ -1,6 +1,9 @@
 resource "aws_iam_role" "EMR_EC2_Admin_Role" {
   name = "EMR_EC2_Admin_Role"
-  managed_policy_arns = ["arn:aws:iam::aws:policy/PowerUserAccess"]
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/PowerUserAccess",
+    "arn:aws:iam::aws:policy/service-role/AmazonElasticMapReduceforEC2Role"
+    ]
   assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",
